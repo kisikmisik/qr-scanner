@@ -14,7 +14,7 @@ class App extends React.Component {
     if (data && data !== this.state.result) {
       axios.post(`http://hq.apps-garden.com:2345/api/cavca-token`, {cavcaToken: data})
       .then(res => {
-        debugger
+        alert('QR-code sent')
       })
 
       this.setState({
