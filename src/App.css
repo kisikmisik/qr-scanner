@@ -17,12 +17,29 @@
   color: #61dafb;
 }
 main {
-  width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+}
+
+.btn {
+  font-size: 25px;
+  border: none;
+  border-radius: 8px;
+  width: 200px;
+  height: 50px;
+  box-sizing: border-box;
+}
+.result {
+  max-width: 90vw;
+  white-space: pre-wrap; 
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap; 
+  white-space: -o-pre-wrap; 
+  word-wrap: break-word; 
+  margin-bottom: 30px;
 }
 
 @keyframes App-logo-spin {

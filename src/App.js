@@ -6,17 +6,12 @@ import axios from 'axios';
 class App extends React.Component {
   state = {
     result: 'No result',
+    infoMessage: 'Scanning qr-code...'
   }
   
 
   handleScan = data => {
-    
     if (data && data !== this.state.result) {
-      axios.post(`https://hq.apps-garden.com:2345/api/cavca-token`, {cavcaToken: data})
-      .then(res => {
-        alert('QR-code sent')
-      })
-
       this.setState({
         result: data,
       })
@@ -27,11 +22,26 @@ class App extends React.Component {
     console.error(err)
   }
 
+  sendQrCode = () => {
+    if (this.state.data) {
+      axios.post(`http://hq.apps-garden.com:2345/api/cavca-token`, {cavcaToken: this.state.data})
+      .then(res => {
+        alert('QR-code sent')
+      })
+    } else {
+      this.setState({
+        infoMessage: "No QR-code found"
+      })
+      setTimeout(()=>{this.setState({infoMessage: 'Scanning qr-code...'})}, 5000)
+    }
+    
+  }
+
   render () {
     return (
       <div className="App">
       <header className="App-header">
-        <p>Scan qr-code</p>
+        <p >{this.state.infoMessage}</p>
       </header>
       <main>
       <QrReader
@@ -39,10 +49,12 @@ class App extends React.Component {
           onError={this.handleError}
           onScan={this.handleScan}
           facingMode={'environment'}
-          style={{ width: '100%' }}
+          style={{ width: '70%' }}
           
         />
-        <p>{this.state.result || 'No result yet'}</p>
+        
+        <p className="result">{this.state.result || 'No result yet'}</p>
+        <button onClick={() => {this.sendQrCode()}} className="btn">Send qr-code</button>
       </main>
     </div>
     )
