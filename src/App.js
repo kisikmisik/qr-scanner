@@ -5,7 +5,7 @@ import axios from 'axios';
 
 class App extends React.Component {
   state = {
-    result: 'No result',
+    result: null,
     infoMessage: 'Scanning qr-code...'
   }
   
@@ -22,12 +22,18 @@ class App extends React.Component {
     console.error(err)
   }
 
+
+
   sendQrCode = () => {
-    if (this.state.data) {
-      axios.post(`http://hq.apps-garden.com:2345/api/cavca-token`, {cavcaToken: this.state.data})
-      .then(res => {
-        alert('QR-code sent')
-      })
+    if (this.state.result) {
+      axios.post(`http://hq.apps-garden.com:2345/api/cavca-token`, {cavcaToken: this.state.result})
+      .then(
+        (res) => {
+          this.setState({infoMessage: 'QR-code successfully sent.'})
+          setTimeout(()=>{this.setState({infoMessage: 'Scanning qr-code...'})}, 5000)
+        },
+        (error) => { console.log(error) }
+      )
     } else {
       this.setState({
         infoMessage: "No QR-code found"
