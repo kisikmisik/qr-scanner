@@ -1,18 +1,26 @@
 import './App.css';
 import QrReader from 'react-qr-reader'
 import React from 'react'
+import axios from 'axios';
 
 class App extends React.Component {
   state = {
-    result: 'No result'
+    result: 'No result',
   }
   
 
   handleScan = data => {
-    if (data) {
-      this.setState({
-        result: data
+    
+    if (data && data !== this.state.result) {
+      axios.post(`http://hq.apps-garden.com:2345/api/cavca-token`, {cavcaToken: data})
+      .then(res => {
+        debugger
       })
+
+      this.setState({
+        result: data,
+      })
+
     }
   }
   handleError = err => {
