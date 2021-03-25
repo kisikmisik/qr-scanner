@@ -12,7 +12,7 @@ class App extends React.Component {
   handleScan = data => {
     
     if (data && data !== this.state.result) {
-      axios.post(`http://hq.apps-garden.com:2345/api/cavca-token`, {cavcaToken: data})
+      axios.post(`https://hq.apps-garden.com:2345/api/cavca-token`, {cavcaToken: data})
       .then(res => {
         alert('QR-code sent')
       })
